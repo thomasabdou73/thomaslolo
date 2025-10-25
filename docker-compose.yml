@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    volumes:
+      - ./backend/videos:/app/videos
+      - ./backend/.env:/app/.env:ro
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
